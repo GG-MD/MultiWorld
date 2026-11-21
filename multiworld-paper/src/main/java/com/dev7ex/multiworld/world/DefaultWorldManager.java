@@ -48,7 +48,7 @@ public class DefaultWorldManager implements WorldManager {
     private static final String LEVEL_FILE = "level.dat";
     private static final String PREVIOUS_SUFFIX = "previous";
     private static final String DIMENSIONS_DIRECTORY = "dimensions";
-    private static final Pattern WORLD_NAME_PATTERN = Pattern.compile("^[A-Za-z0-9_-][A-Za-z0-9._-]{0,63}$");
+    private static final Pattern WORLD_NAME_PATTERN = Pattern.compile("^[A-Za-z0-9_-]{1,64}$");
     private static final String UNKNOWN_CREATOR = "Unknown";
     private static final Pattern LEFTOVER_PATTERN = Pattern.compile("^(.+)\\.(previous|restoring|deleted)-\\d{13}$");
     private static final Set<NamespacedKey> PROTECTED_WORLD_KEYS = Set.of(
@@ -74,7 +74,7 @@ public class DefaultWorldManager implements WorldManager {
             return null;
         }
 
-        if ((!DefaultWorldManager.WORLD_NAME_PATTERN.matcher(worldName).matches()) || (DefaultWorldManager.LEFTOVER_PATTERN.matcher(worldName).matches())) {
+        if (!DefaultWorldManager.WORLD_NAME_PATTERN.matcher(worldName).matches()) {
             this.sendMessage(audience, WorldLocalizationEntry.MESSAGE_WORLD_NAME_INVALID, worldName);
             return null;
         }
